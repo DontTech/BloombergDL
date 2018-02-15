@@ -1,0 +1,2065 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.bloomberg.com/datalicense/dlws/ps/20071001" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PerSecurityWS" targetNamespace="http://services.bloomberg.com/datalicense/dlws/ps/20071001">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://services.bloomberg.com/datalicense/dlws/ps/20071001" elementFormDefault="qualified" targetNamespace="http://services.bloomberg.com/datalicense/dlws/ps/20071001">
+
+
+	<xs:simpleType name="MarketSector">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Govt"/>
+			<xs:enumeration value="Corp"/>
+			<xs:enumeration value="Mtge"/>
+			<xs:enumeration value="M-Mkt"/>
+			<xs:enumeration value="Muni"/>
+			<xs:enumeration value="Pfd"/>
+			<xs:enumeration value="Equity"/>
+			<xs:enumeration value="Comdty"/>
+			<xs:enumeration value="Index"/>
+			<xs:enumeration value="Curncy"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MacroType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BOND_SRCH"/>
+			<xs:enumeration value="EQUITY_SRCH"/>
+			<xs:enumeration value="EXCH"/>
+			<xs:enumeration value="INDEX"/>
+			<xs:enumeration value="PFD_SRCH"/>
+			<xs:enumeration value="PORTFOLIO"/>
+			<xs:enumeration value="SECTYP"/>
+			<xs:enumeration value="BSRCH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecondaryQualifierOperator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Equals"/>
+			<xs:enumeration value="NotEquals"/>
+			<xs:enumeration value="GreaterThan"/>
+			<xs:enumeration value="LessThan"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecondaryQualifierType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTIVE_PRICING"/>
+			<xs:enumeration value="COUNTRY"/>
+			<xs:enumeration value="CPN_TYP"/>
+			<xs:enumeration value="CRNCY"/>
+			<xs:enumeration value="EXCH_TRADED"/>
+			<xs:enumeration value="MATURED"/>
+			<xs:enumeration value="NET_CPN"/>
+			<xs:enumeration value="RATE"/>
+			<xs:enumeration value="RATING"/>
+			<xs:enumeration value="SECURITY_DES"/>
+			<xs:enumeration value="SECURITY_TYP"/>
+			<xs:enumeration value="SERIES"/>
+			<xs:enumeration value="TICKER"/>
+			<xs:enumeration value="WAC"/>
+			<xs:enumeration value="WALA"/>
+			<xs:enumeration value="WAM"/>
+			<xs:enumeration value="BVAL_OTC_FREQUENCY"/>
+			<xs:enumeration value="BVAL_OTC_EXPIRED"/>
+			<xs:enumeration value="BVAL_OTC_ASSET"/>
+			<xs:enumeration value="BVAL_OTC_SNAPSHOT"/>
+			<xs:enumeration value="BVAL_OTC_UNWOUND"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstrumentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AUSTRIAN"/>
+			<xs:enumeration value="BB_UNIQUE"/>
+			<xs:enumeration value="BB_GLOBAL"/>
+			<xs:enumeration value="BELGIAN"/>
+			<xs:enumeration value="CATS"/>
+			<xs:enumeration value="CEDEL"/>
+			<xs:enumeration value="CINS"/>
+			<xs:enumeration value="COMMON_NUMBER"/>
+			<xs:enumeration value="CUSIP"/>
+			<xs:enumeration value="CZECH"/>
+			<xs:enumeration value="DUTCH"/>
+			<xs:enumeration value="EUROCLEAR"/>
+			<xs:enumeration value="FRENCH"/>
+			<xs:enumeration value="IRISH"/>
+			<xs:enumeration value="ISIN"/>
+			<xs:enumeration value="ISRAELI"/>
+			<xs:enumeration value="ITALY"/>
+			<xs:enumeration value="JAPAN"/>
+			<xs:enumeration value="LUXEMBOURG"/>
+			<xs:enumeration value="SEDOL"/>
+			<xs:enumeration value="SPAIN"/>
+			<xs:enumeration value="TICKER"/>
+			<xs:enumeration value="VALOREN"/>
+			<xs:enumeration value="WPK"/>
+			<xs:enumeration value="BB_COMPANY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SpecialChar">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fraction"/>
+			<xs:enumeration value="decimal"/>
+			<xs:enumeration value="altdecimal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProgramFlag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="oneshot"/>
+			<xs:enumeration value="daily"/>
+			<xs:enumeration value="weekly"/>
+			<xs:enumeration value="monthly"/>
+			<xs:enumeration value="weekday"/>
+			<xs:enumeration value="weekend"/>
+			<xs:enumeration value="adhoc"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Version">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="new"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DiffFlag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="changes"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateFormat">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mmddyy"/>
+			<xs:enumeration value="yyddmm"/>
+			<xs:enumeration value="mmyydd"/>
+			<xs:enumeration value="dmmyy"/>
+			<xs:enumeration value="yyyyddmm"/>
+			<xs:enumeration value="mmyyyydd"/>
+			<xs:enumeration value="yyyymmdd"/>
+			<xs:enumeration value="yymmdd"/>
+			<xs:enumeration value="ddyymm"/>
+			<xs:enumeration value="mmddyyyy"/>
+			<xs:enumeration value="yyyy/mm/dd"/>
+			<xs:enumeration value="ddyyyymm"/>
+			<xs:enumeration value="dd-mmm-yy"/>
+			<xs:enumeration value="ddmmyyyy"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FieldType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Character"/>
+			<xs:enumeration value="Numeric"/>
+			<xs:enumeration value="Price"/>
+			<xs:enumeration value="Security"/>
+			<xs:enumeration value="Date"/>
+			<xs:enumeration value="Time"/>
+			<xs:enumeration value="Date/Time"/>
+			<xs:enumeration value="Bulk"/>
+			<xs:enumeration value="Month/Year"/>
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Currency"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="Real"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HistPeriod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="daily"/>
+			<xs:enumeration value="weekly"/>
+			<xs:enumeration value="monthly"/>
+			<xs:enumeration value="quarterly"/>
+			<xs:enumeration value="yearly"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HistOption">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="average"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FilingStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mostrecent"/>
+			<xs:enumeration value="prelim"/>
+			<xs:enumeration value="original"/>
+			<xs:enumeration value="restated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Periodicity">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="y"/>
+			<xs:enumeration value="q"/>
+			<xs:enumeration value="s"/>
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="c"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BvalTier">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BvalSnapshot">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ny4pm"/>
+			<xs:enumeration value="lo4pm"/>
+			<xs:enumeration value="to4pm"/>
+			<xs:enumeration value="ny3pm"/>
+			<xs:enumeration value="lo3pm"/>
+			<xs:enumeration value="to3pm"/>
+			<xs:enumeration value="lo12pm"/>
+			<xs:enumeration value="to5pm"/>
+			<xs:enumeration value="sy5pm"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CancelStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ERROR"/>
+			<xs:enumeration value="NOT FOUND"/>
+			<xs:enumeration value="CANCELLED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PortSecDes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="adjusted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActionsDate">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="entry"/>
+			<xs:enumeration value="effective"/>
+			<xs:enumeration value="both"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OtcBvalAction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="insert"/>
+			<xs:enumeration value="update"/>
+			<xs:enumeration value="unwind"/>
+			<xs:enumeration value="reprice"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RegSolvency">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="packaged"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CancelHeaders">
+		<xs:all>
+			<xs:element name="programflag" type="ProgramFlag"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetCorrectionsHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="dateformat" type="DateFormat"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetDataHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="closingvalues" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dateformat" type="DateFormat"/>
+			<xs:element minOccurs="0" name="derived" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="diffflag" type="DiffFlag"/>
+			<xs:element minOccurs="0" name="hist_crncy" type="xs:string"/>
+			<xs:element minOccurs="0" name="historical" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="secmaster" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="specialchar" type="SpecialChar"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="login" type="xs:string"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+			<xs:element minOccurs="0" name="quotecomposite" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="creditrisk" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="quotecompositehist" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="exclusive_pricing_src" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="estimates" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="bvaltier" type="BvalTier"/>
+			<xs:element minOccurs="0" name="bvalsnapshot" type="BvalSnapshot"/>
+			<xs:element minOccurs="0" name="bvalsnapshotdate" type="xs:string"/>
+			<xs:element minOccurs="0" name="bvalbeta" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="pricing_source" type="xs:string"/>
+			<xs:element minOccurs="0" name="portsecdes" type="PortSecDes"/>
+			<xs:element minOccurs="0" name="prp" type="xs:int"/>
+			<xs:element minOccurs="0" name="fundamentals" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="pricing" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="skip_pcs" type="xs:string"/>
+			<xs:element minOccurs="0" name="vol_surface" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regssfa" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regfvhl" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regtransparency" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regcomp" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="corpstruct" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="capstruct" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regsolvency" type="RegSolvency"/>
+			<xs:element minOccurs="0" name="reghqla" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="reghqlaamer" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="reghqlaeuro" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="reghqlaasia" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regcbe" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regcfid" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="reglqa" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="mifir" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="defaultrisk" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="ifrs9sppi" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="coltag" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="uswhldtax" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regecl" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="basictax" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="invstprot" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="encoding" type="xs:string"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="Period">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="start" type="xs:date"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="end" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Duration">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="days" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateRange">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="period" type="Period"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="duration" type="Duration"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetHistoryHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="daterange" type="DateRange"/>
+			<xs:element minOccurs="0" name="hist_crncy" type="xs:string"/>
+			<xs:element minOccurs="0" name="hist_period" type="HistPeriod"/>
+			<xs:element minOccurs="0" name="hist_option" type="HistOption"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="pricing_source" type="xs:string"/>
+			<xs:element minOccurs="0" name="display_pricing_src" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="login" type="xs:string"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+			<xs:element minOccurs="0" name="portsecdes" type="PortSecDes"/>
+			<xs:element minOccurs="0" name="prp" type="xs:int"/>
+			<xs:element minOccurs="0" name="exclusive_pricing_src" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="bvalbeta" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regfvhl" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="regtransparency" type="xs:boolean"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetFundamentalsHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="filingstatus" type="FilingStatus"/>
+			<xs:element minOccurs="0" name="currency" type="xs:string"/>
+			<xs:element minOccurs="1" name="daterange" type="DateRange"/>
+			<xs:element minOccurs="0" name="periodicity" type="Periodicity"/>
+			<xs:element minOccurs="0" name="consolidated" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="adjusted" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetCompanyHeaders">
+		<xs:all>
+			<xs:element minOccurs="1" name="creditrisk" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dateformat" type="DateFormat"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="specialchar" type="SpecialChar"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetActionsHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="actions" type="Actions"/>
+			<xs:element minOccurs="0" name="actions_date" type="ActionsDate"/>
+			<xs:element minOccurs="0" name="daterange" type="DateRange"/>
+			<xs:element minOccurs="0" name="dateformat" type="DateFormat"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="GetPortfolioValidationHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="closingvalues" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dateformat" type="DateFormat"/>
+			<xs:element minOccurs="0" name="derived" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="diffflag" type="DiffFlag"/>
+			<xs:element minOccurs="0" name="hist_crncy" type="xs:string"/>
+			<xs:element minOccurs="0" name="historical" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="secmaster" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="specialchar" type="SpecialChar"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="login" type="xs:string"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+			<xs:element minOccurs="0" name="exclusive_pricing_src" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="bvaltier" type="BvalTier"/>
+			<xs:element minOccurs="0" name="bvalsnapshot" type="BvalSnapshot"/>
+			<xs:element minOccurs="0" name="bvalsnapshotdate" type="xs:string"/>
+			<xs:element minOccurs="0" name="bvalbeta" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="pricing_source" type="xs:string"/>
+			<xs:element minOccurs="0" name="portsecdes" type="PortSecDes"/>
+			<xs:element minOccurs="0" name="prp" type="xs:int"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="QuotesHeaders">
+		<xs:all>
+			<xs:element minOccurs="0" name="daterange" type="DateRange"/>
+			<xs:element minOccurs="0" name="datetimerange" type="DateTimeRange"/>
+			<xs:element minOccurs="0" name="displayqrmdate" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="login" type="xs:string"/>
+			<xs:element minOccurs="0" name="portsecdes" type="PortSecDes"/>
+			<xs:element minOccurs="0" name="pricing_source" type="xs:string"/>
+			<xs:element minOccurs="0" name="programflag" type="ProgramFlag"/>
+			<xs:element minOccurs="0" name="prp" type="xs:int"/>
+			<xs:element minOccurs="0" name="rundate" type="xs:string"/>
+			<xs:element minOccurs="0" name="secid" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="sn" type="xs:int"/>
+			<xs:element minOccurs="0" name="tickexchlength" type="xs:int"/>
+			<xs:element minOccurs="0" name="ticklocaltz" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="tickoutputtz" type="TickOutputTz"/>
+			<xs:element minOccurs="0" name="time" type="xs:string"/>
+			<xs:element minOccurs="0" name="usernumber" type="xs:int"/>
+			<xs:element minOccurs="0" name="version" type="Version"/>
+			<xs:element minOccurs="0" name="ws" type="xs:int"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="DateTimeRange">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="startDateTime" type="xs:dateTime"/>
+			<xs:element minOccurs="1" name="endDateTime" type="xs:dateTime"/>
+			<xs:element minOccurs="1" name="region" type="xs:string"/>
+			<xs:element minOccurs="0" name="dst" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TickOutputTz">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="timezone" type="xs:string"/>
+			<xs:element minOccurs="0" name="dst" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FieldMacro">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BO_CREDIT_RISK_COMPANY"/>
+			<xs:enumeration value="BO_CREDIT_RISK_FITCH"/>
+			<xs:enumeration value="BO_CREDIT_RISK_MOODY"/>
+			<xs:enumeration value="BO_CREDIT_RISK_RATINGS1"/>
+			<xs:enumeration value="BO_CREDIT_RISK_RATINGS2"/>
+			<xs:enumeration value="BO_CREDIT_RISK_SP"/>
+			<xs:enumeration value="BVAL_FVHL_REG_TRANSPARENCY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BvalFieldMacro">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BVAL_ALL"/>
+			<xs:enumeration value="BVAL_BOND"/>
+			<xs:enumeration value="BVAL_MTGE"/>
+			<xs:enumeration value="BVAL_MUNI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FieldSets">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="fieldset" type="FieldSet"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FieldSet">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="fieldmacro" type="FieldMacro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="date" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BvalFieldSets">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="fieldset" type="BvalFieldSet"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BvalFieldSet">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="fieldmacro" type="BvalFieldMacro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="date" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScheduledHeaders">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="getdataHeaders" type="GetDataHeaders"/>
+			<xs:element minOccurs="0" name="gethistoryHeaders" type="GetHistoryHeaders"/>
+			<xs:element minOccurs="0" name="getfundamentalsHeaders" type="GetFundamentalsHeaders"/>
+			<xs:element minOccurs="0" name="getcompanyHeaders" type="GetCompanyHeaders"/>
+			<xs:element minOccurs="0" name="getactionsHeaders" type="GetActionsHeaders"/>
+			<xs:element minOccurs="0" name="getquotesHeaders" type="QuotesHeaders"/>
+			<xs:element minOccurs="0" name="getallquotesHeaders" type="QuotesHeaders"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Fields">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="field" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Overrides">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="override" type="Override"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Instruments">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="macro" type="Macro"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FundInstruments">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrument" type="FundInstrument"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="macro" type="Macro"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="InstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistInstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="HistInstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FundInstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="FundInstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActionsInstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="ActionsInstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrectionRecords">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="correctionRecord" type="CorrectionRecord"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuotesInstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="QuotesInstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+		<xs:complexType name="AllQuotesInstrumentDatas">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="instrumentData" type="AllQuotesInstrumentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Instrument">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+			<xs:element minOccurs="0" name="type" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="overrides" type="Overrides"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FundInstrument">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element minOccurs="0" name="yellowkey" type="MarketSector"/>
+			<xs:element minOccurs="0" name="type" type="InstrumentType"/>
+			<xs:element minOccurs="0" name="overrides" type="Overrides"/>
+			<xs:element minOccurs="0" name="period" type="Period"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Macro">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="primaryQualifier" type="PrimaryQualifier"/>
+			<xs:element maxOccurs="7" minOccurs="0" name="secondaryQualifier" type="SecondaryQualifier"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="overrides" type="Overrides"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrimaryQualifier">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="primaryQualifierType" type="MacroType"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="primaryQualifierValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecondaryQualifier">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="secondaryQualifierType" type="SecondaryQualifierType"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="secondaryQualifierOperator" type="SecondaryQualifierOperator"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="secondaryQualifierValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Override">
+		<xs:sequence>
+			<xs:element name="field" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Actions">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="action" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DataItem">
+		<xs:sequence>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" type="Data"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistInstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The historical data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="pricingSource" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="date" type="xs:date"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" type="HistData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FundInstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The Fundamentals data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="FundInstrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" type="Data"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuotesInstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The quotes data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="pcs" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="quotes" type="QRQuotes"/>
+			<xs:element name="code" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AllQuotesInstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The allquotes data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="pcs" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="quotes" type="QRMQuotes"/>
+			<xs:element name="code" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActionsInstrumentData">
+		<xs:annotation>
+			<xs:documentation>
+				The Corporate Actions data for an instrument
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="instrument" type="Instrument"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="macro" type="Macro"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="standardFields" type="ActionStandardFields"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" type="Data"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrectionRecord">
+		<xs:annotation>
+			<xs:documentation>
+				The data for a historical price correction
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="instrument" type="Instrument"/>
+			<xs:element name="field" type="xs:string"/>
+			<xs:element name="oldValue" type="xs:string"/>
+			<xs:element name="oldDateEntered" type="xs:string"/>
+			<xs:element name="newValue" type="xs:string"/>
+			<xs:element name="newDateEntered" type="xs:string"/>
+			<xs:element name="timeEntered" type="xs:string"/>
+			<xs:element name="exchangeIndicator" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Data">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="bulkarray" type="BulkArray"/>
+		</xs:sequence>
+		<xs:attribute name="field" type="xs:string" use="optional"/>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="isArray" type="xs:boolean" use="optional"/>
+		<xs:attribute name="rows" type="xs:int" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="QRQuotes">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="QRQuote"/>
+		</xs:sequence>
+	</xs:complexType>
+		<xs:complexType name="QRMQuotes">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="QRMQuote"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QRQuote">
+		<xs:annotation>
+			<xs:documentation>
+					QR Quote is a trade quote.  It will have date, time, price, volume, exchange, and condition code.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="dateTime" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="price" type="xs:string" use="optional"/>
+		<xs:attribute name="volume" type="xs:string" use="optional"/>
+		<xs:attribute name="exCode" type="xs:string" use="optional"/>
+		<xs:attribute name="condCode" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="QRMQuoteData">
+		<xs:annotation>
+			<xs:documentation>
+					QRM Quote is a matched bid/ask, or a trade quote.  It will have price, volume, market maker, and exchange, for each bid/ask, and trade.
+					It will have a single date/time and condition code associated with the set (1 trade, or 1+1 bid+ask).
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+		<xs:attribute name="price" type="xs:string" use="optional"/>
+		<xs:attribute name="volume" type="xs:string" use="optional"/>
+		<xs:attribute name="mm" type="xs:string" use="optional"/>
+		<xs:attribute name="exCode" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="QRMQuote">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="matchedQuote" type="QRMQuoteData"/>
+		</xs:sequence>
+		<xs:attribute name="dateTime" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="condCode" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="HistData">
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ActionStandardFields">
+		<xs:annotation>
+			<xs:documentation>
+				These fields are standard for all corporate actions
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="companyId" type="xs:int"/>
+			<xs:element minOccurs="0" name="securityId" type="xs:int"/>
+			<xs:element minOccurs="0" name="actionId" type="xs:int"/>
+			<xs:element minOccurs="0" name="mnemonic" type="xs:string"/>
+			<xs:element minOccurs="0" name="flag" type="xs:string"/>
+			<xs:element minOccurs="0" name="companyName" type="xs:string"/>
+			<xs:element minOccurs="0" name="secIdType" type="xs:string"/>
+			<xs:element minOccurs="0" name="secId" type="xs:string"/>
+			<xs:element minOccurs="0" name="currency" type="xs:string"/>
+			<xs:element minOccurs="0" name="marketSectorDes" type="MarketSector"/>
+			<xs:element minOccurs="0" name="bbUnique" type="xs:string"/>
+			<xs:element minOccurs="0" name="announceDate" type="xs:string"/>
+			<xs:element minOccurs="0" name="effectiveDate" type="xs:string"/>
+			<xs:element minOccurs="0" name="amendDate" type="xs:string"/>
+			<xs:element minOccurs="0" name="bbGlobal" type="xs:string"/>
+			<xs:element minOccurs="0" name="bbGlobalCompany" type="xs:string"/>
+			<xs:element minOccurs="0" name="bbSecNumDes" type="xs:string"/>
+			<xs:element minOccurs="0" name="feedSource" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BulkArray">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" type="BulkArrayEntry"/>
+		</xs:sequence>
+		<xs:attribute name="columns" type="xs:int" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="BulkArrayEntry">
+		<xs:attribute name="value" type="xs:string"/>
+		<xs:attribute name="type" type="FieldType"/>
+	</xs:complexType>
+	<xs:complexType name="ResponseStatus">
+		<xs:sequence>
+			<xs:element name="code" type="xs:int"/>
+			<xs:element name="description" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelResponseStatus">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element name="cancelStatus" type="CancelStatus"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DLCategory">
+		<xs:annotation>
+			<xs:documentation>
+				Representation of a Data License category for a field
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Security Master"/>
+			<xs:enumeration value="Derived Data"/>
+			<xs:enumeration value="End of Day Pricing"/>
+			<xs:enumeration value="User Entered Info."/>
+			<xs:enumeration value="Corporate Actions"/>
+			<xs:enumeration value="Historical Time Series"/>
+			<xs:enumeration value="Estimates"/>
+			<xs:enumeration value="Fundamentals"/>
+			<xs:enumeration value="Quote Composite"/>
+			<xs:enumeration value="Credit Risk"/>
+			<xs:enumeration value="Reg SSFA"/>
+			<xs:enumeration value="Bram Fair Value Hierarchy Leveling Tool"/>
+			<xs:enumeration value="Premium BRAM Transparency"/>
+			<xs:enumeration value="Price Uncertainty"/>
+			<xs:enumeration value="Not Downloadable"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DLCategory2">
+		<xs:annotation>
+			<xs:documentation>
+				Representation of a Data License Customer Engagement model category for a field
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Security Master"/>
+			<xs:enumeration value="Derived - Intraday"/>
+			<xs:enumeration value="Derived - End of Day"/>
+			<xs:enumeration value="Pricing - Intraday"/>
+			<xs:enumeration value="Pricing - End of Day"/>
+			<xs:enumeration value="User Entered Info."/>
+			<xs:enumeration value="Corporate Actions"/>
+			<xs:enumeration value="Historical Time Series"/>
+			<xs:enumeration value="Estimates"/>
+			<xs:enumeration value="Fundamentals"/>
+			<xs:enumeration value="Quote Composite"/>
+			<xs:enumeration value="Quote Composite History"/>
+			<xs:enumeration value="Credit Risk"/>
+			<xs:enumeration value="Packaged"/>
+			<xs:enumeration value="Open Source"/>
+			<xs:enumeration value="Reg SSFA"/>
+			<xs:enumeration value="Volatility Surface"/>
+			<xs:enumeration value="Volatility Cube"/>
+			<xs:enumeration value="Bram Fair Value Hierarchy Leveling Tool"/>
+			<xs:enumeration value="Credit Risk Corporate Structure"/>
+			<xs:enumeration value="Credit Risk Capital Structure"/>
+			<xs:enumeration value="Credit Risk Regulatory Compliance"/>
+			<xs:enumeration value="Premium BRAM Transparency"/>
+			<xs:enumeration value="Price Uncertainty"/>
+			<xs:enumeration value="Not Downloadable"/>
+			<xs:enumeration value="Central Bank Eligibility"/>
+			<xs:enumeration value="Covered Funds"/>
+			<xs:enumeration value="High Quality Liquid Assets"/>
+			<xs:enumeration value="Liquidity Assessment"/>
+			<xs:enumeration value="MiFIR"/>
+			<xs:enumeration value="Default Risk"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FieldSearchCriteria">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="keyword" type="xs:string"/>
+			<xs:element minOccurs="0" name="mnemonic" type="xs:string"/>
+			<xs:element maxOccurs="5" minOccurs="0" name="dlCategories" type="DLCategory"/>
+			<xs:element minOccurs="0" name="overridable" type="xs:boolean"/>
+			<xs:element maxOccurs="10" minOccurs="0" name="marketsectors" type="MarketSector"/>
+			<xs:element maxOccurs="5" minOccurs="0" name="dlCategories2" type="DLCategory2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FieldInfos">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="field" type="FieldInfo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FieldInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:string"/>
+			<xs:element minOccurs="0" name="mnemonic" type="xs:string"/>
+			<xs:element minOccurs="0" name="description" type="xs:string"/>
+			<xs:element minOccurs="0" name="dlCategory" type="DLCategory"/>
+			<xs:element minOccurs="0" name="definition" type="xs:string"/>
+			<xs:element maxOccurs="10" minOccurs="0" name="marketsectors" type="MarketSector"/>
+			<xs:element minOccurs="0" name="standardWidth" type="xs:int"/>
+			<xs:element minOccurs="0" name="standardDecimalPlaces" type="xs:int"/>
+			<xs:element minOccurs="0" name="fieldType" type="xs:string"/>
+			<xs:element minOccurs="0" name="backoffice" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="extendedBackoffice" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="productionDate" type="xs:date"/>
+			<xs:element minOccurs="0" name="dlCategory2" type="DLCategory2"/>
+			<xs:element minOccurs="0" name="psBoOpt" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="getHistory" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="getCompany" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="bval" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="bvalBlocked" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dsBvalMetered" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="sapiOMS" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="oldMnemonic" type="xs:string"/>
+			<xs:element minOccurs="0" name="currentMaximumWidth" type="xs:int"/>
+			<xs:element minOccurs="0" name="dlBoOptFundamentals" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptBDVD" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptBEST" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptCreditRisk" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptCapStruct" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptCreditRiskGetCompany" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptCapStructGetCompany" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptRegCompliance" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="dlBoOptIssuerRatings" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtcBvalHeaders">
+		<xs:sequence>
+			<xs:element name="contentType" type="xs:string"/>
+			<xs:element name="mimeVersion" type="xs:string"/>
+			<xs:element name="contentEncoding" type="xs:string"/>
+			<xs:element name="contentDisposition" type="xs:string"/>
+			<xs:element name="fileName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtcDealInformation">
+			<xs:sequence>
+				<xs:element name="statusCode" type="ResponseStatus"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="customId" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="dealId" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="dealType" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="action" type="OtcBvalAction"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="portfolioId" type="xs:string"/>
+			</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtcDealInfos">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="deal" type="OtcDealInformation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PerSecurityResponse">
+		<xs:sequence>
+			<xs:element name="statusCode" type="ResponseStatus"/>
+			<xs:element name="requestId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetDataRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="GetDataHeaders"/>
+			<xs:element minOccurs="0" name="fieldsets" type="BvalFieldSets"/>
+			<xs:element minOccurs="0" name="fields" type="Fields"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetDataResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetDataRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetDataResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetDataHeaders"/>
+					<xs:element minOccurs="0" name="fields" type="Fields"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="InstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetHistoryRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="GetHistoryHeaders"/>
+			<xs:element name="fields" type="Fields"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetHistoryResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetHistoryRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetHistoryResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetHistoryHeaders"/>
+					<xs:element minOccurs="0" name="fields" type="Fields"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="HistInstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitCancelRequest">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" name="responseId" type="xs:string"/>
+			<xs:element name="headers" type="CancelHeaders"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitCancelResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveCancelRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveCancelResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="0" name="headers" type="CancelHeaders"/>
+					<xs:element maxOccurs="unbounded" minOccurs="1" name="cancelResponseStatus" type="CancelResponseStatus"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetCorrectionsRequest">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetCorrectionsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="headers" type="GetCorrectionsHeaders"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="correctionRecords" type="CorrectionRecords"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitScheduledRequest"/>
+	<xs:complexType name="SubmitScheduledResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveScheduledRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScheduledResponses">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="fileData" type="ScheduledResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScheduledResponse">
+		<xs:annotation>
+			<xs:documentation>
+				Scheduled Response consists of various PerSecurity files submitted
+				previously and scheduled for running at specified intervals
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="headers" type="ScheduledHeaders"/>
+			<xs:element minOccurs="0" name="fields" type="Fields"/>
+			<xs:element minOccurs="0" name="bvalfieldsets" type="BvalFieldSets"/>
+			<xs:element minOccurs="0" name="fieldsets" type="FieldSets"/>
+			<xs:element minOccurs="0" name="instruments" type="Instruments"/>
+			<xs:element minOccurs="0" name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="time" type="xs:time"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveScheduledResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="fileDatas" type="ScheduledResponses"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetFundamentalsRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="GetFundamentalsHeaders"/>
+			<xs:element name="fields" type="Fields"/>
+			<xs:element name="instruments" type="FundInstruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetFundamentalsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetFundamentalsRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetFundamentalsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetFundamentalsHeaders"/>
+					<xs:element minOccurs="0" name="fields" type="Fields"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="FundInstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetCompanyRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="GetCompanyHeaders"/>
+			<xs:element minOccurs="0" name="fieldset" type="FieldSet"/>
+			<xs:element minOccurs="0" name="fields" type="Fields"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetCompanyResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetCompanyRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetCompanyResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetCompanyHeaders"/>
+					<xs:element minOccurs="0" name="fields" type="Fields"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="InstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetPortfolioValidationRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetPortfolioValidationResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetPortfolioValidationHeaders"/>
+					<xs:element minOccurs="0" name="fields" type="Fields"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="InstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetActionsRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="GetActionsHeaders"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetActionsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetActionsRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetActionsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="GetActionsHeaders"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="ActionsInstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetQuotesRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="QuotesHeaders"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetQuotesResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetQuotesRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetQuotesResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="QuotesHeaders"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="QuotesInstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetAllQuotesRequest">
+		<xs:sequence>
+			<xs:element name="headers" type="QuotesHeaders"/>
+			<xs:element name="instruments" type="Instruments"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitGetAllQuotesResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetAllQuotesRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveGetAllQuotesResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="headers" type="QuotesHeaders"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="instrumentDatas" type="AllQuotesInstrumentDatas"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitOtcbvalUploadRequest">
+		<xs:sequence>
+			<xs:element name="usernumber" type="xs:int"/>
+			<xs:element name="otcBvalHeaders" type="OtcBvalHeaders"/>
+			<xs:element name="fileContent" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitOtcbvalUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveOtcbvalUploadRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveOtcbvalUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="response" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubmitOtcBvalDealsUploadRequest">
+		<xs:sequence>
+			<xs:element name="usernumber" type="xs:int"/>
+			<xs:element name="otcBvalHeaders" type="OtcBvalHeaders"/>
+			<xs:element name="fileContent" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitOtcBvalDealsUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveOtcBvalDealsUploadRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveOtcBvalDealsUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="deals" type="OtcDealInfos"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GetFieldsRequest">
+		<xs:sequence>
+			<xs:element name="criteria" type="FieldSearchCriteria"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetFieldsResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="fields" type="FieldInfos"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MmktBvalHeaders">
+		<xs:sequence>
+			<xs:element name="contentType" type="xs:string"/>
+			<xs:element name="mimeVersion" type="xs:string"/>
+			<xs:element name="contentEncoding" type="xs:string"/>
+			<xs:element name="contentDisposition" type="xs:string"/>
+			<xs:element name="fileName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitMmktBvalDealsUploadRequest">
+		<xs:sequence>
+			<xs:element name="usernumber" type="xs:int"/>
+			<xs:element name="mmktBvalHeaders" type="MmktBvalHeaders"/>
+			<xs:element name="fileContent" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitMmktBvalDealsUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RetrieveMmktBvalDealsUploadRequest">
+		<xs:sequence>
+			<xs:element name="responseId" type="xs:string"/>
+			<xs:element minOccurs="0" name="responseDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MmktBvalDealInformation">
+			<xs:sequence>
+				<xs:element name="statusCode" type="ResponseStatus"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="clientDealId" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="bbDealId" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="dtcCusip" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="ticker" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="programType" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="currency" type="xs:string"/>
+				<xs:element maxOccurs="1" minOccurs="0" name="maturity" type="xs:date"/>
+			</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MmktBvalDealInfos">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="deal" type="MmktBvalDealInformation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveMmktBvalDealsUploadResponse">
+		<xs:complexContent>
+			<xs:extension base="PerSecurityResponse">
+				<xs:sequence>
+					<xs:element name="responseId" type="xs:string"/>
+					<xs:element minOccurs="0" name="timestarted" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="deals" type="MmktBvalDealInfos"/>
+					<xs:element minOccurs="0" name="timefinished" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="submitGetDataRequest" type="SubmitGetDataRequest"/>
+	<xs:element name="submitGetDataResponse" type="SubmitGetDataResponse"/>
+	<xs:element name="retrieveGetDataRequest" type="RetrieveGetDataRequest"/>
+	<xs:element name="retrieveGetDataResponse" type="RetrieveGetDataResponse"/>
+	<xs:element name="submitGetHistoryRequest" type="SubmitGetHistoryRequest"/>
+	<xs:element name="submitGetHistoryResponse" type="SubmitGetHistoryResponse"/>
+	<xs:element name="retrieveGetHistoryRequest" type="RetrieveGetHistoryRequest"/>
+	<xs:element name="retrieveGetHistoryResponse" type="RetrieveGetHistoryResponse"/>
+	<xs:element name="submitScheduledRequest" type="SubmitScheduledRequest"/>
+	<xs:element name="submitScheduledResponse" type="SubmitScheduledResponse"/>
+	<xs:element name="retrieveScheduledRequest" type="RetrieveScheduledRequest"/>
+	<xs:element name="retrieveScheduledResponse" type="RetrieveScheduledResponse"/>
+	<xs:element name="submitCancelRequest" type="SubmitCancelRequest"/>
+	<xs:element name="submitCancelResponse" type="SubmitCancelResponse"/>
+	<xs:element name="retrieveCancelRequest" type="RetrieveCancelRequest"/>
+	<xs:element name="retrieveCancelResponse" type="RetrieveCancelResponse"/>
+	<xs:element name="getCorrectionsRequest" type="GetCorrectionsRequest"/>
+	<xs:element name="getCorrectionsResponse" type="GetCorrectionsResponse"/>
+	<xs:element name="submitGetFundamentalsRequest" type="SubmitGetFundamentalsRequest"/>
+	<xs:element name="submitGetFundamentalsResponse" type="SubmitGetFundamentalsResponse"/>
+	<xs:element name="retrieveGetFundamentalsRequest" type="RetrieveGetFundamentalsRequest"/>
+	<xs:element name="retrieveGetFundamentalsResponse" type="RetrieveGetFundamentalsResponse"/>
+	<xs:element name="submitGetCompanyRequest" type="SubmitGetCompanyRequest"/>
+	<xs:element name="submitGetCompanyResponse" type="SubmitGetCompanyResponse"/>
+	<xs:element name="retrieveGetCompanyRequest" type="RetrieveGetCompanyRequest"/>
+	<xs:element name="retrieveGetCompanyResponse" type="RetrieveGetCompanyResponse"/>
+	<xs:element name="submitGetActionsRequest" type="SubmitGetActionsRequest"/>
+	<xs:element name="submitGetActionsResponse" type="SubmitGetActionsResponse"/>
+	<xs:element name="retrieveGetActionsRequest" type="RetrieveGetActionsRequest"/>
+	<xs:element name="retrieveGetActionsResponse" type="RetrieveGetActionsResponse"/>
+	<xs:element name="getPortfolioValidationRequest" type="GetPortfolioValidationRequest"/>
+	<xs:element name="getPortfolioValidationResponse" type="GetPortfolioValidationResponse"/>
+	<xs:element name="submitGetQuotesRequest" type="SubmitGetQuotesRequest"/>
+	<xs:element name="submitGetQuotesResponse" type="SubmitGetQuotesResponse"/>
+	<xs:element name="retrieveGetQuotesRequest" type="RetrieveGetQuotesRequest"/>
+	<xs:element name="retrieveGetQuotesResponse" type="RetrieveGetQuotesResponse"/>
+	<xs:element name="submitGetAllQuotesRequest" type="SubmitGetAllQuotesRequest"/>
+	<xs:element name="submitGetAllQuotesResponse" type="SubmitGetAllQuotesResponse"/>
+	<xs:element name="retrieveGetAllQuotesRequest" type="RetrieveGetAllQuotesRequest"/>
+	<xs:element name="retrieveGetAllQuotesResponse" type="RetrieveGetAllQuotesResponse"/>
+	<xs:element name="submitOtcbvalUploadRequest" type="SubmitOtcbvalUploadRequest"/>
+	<xs:element name="submitOtcbvalUploadResponse" type="SubmitOtcbvalUploadResponse"/>
+	<xs:element name="retrieveOtcbvalUploadRequest" type="RetrieveOtcbvalUploadRequest"/>
+	<xs:element name="retrieveOtcbvalUploadResponse" type="RetrieveOtcbvalUploadResponse"/>
+	<xs:element name="submitOtcBvalDealsUploadRequest" type="SubmitOtcBvalDealsUploadRequest"/>
+	<xs:element name="submitOtcBvalDealsUploadResponse" type="SubmitOtcBvalDealsUploadResponse"/>
+	<xs:element name="retrieveOtcBvalDealsUploadRequest" type="RetrieveOtcBvalDealsUploadRequest"/>
+	<xs:element name="retrieveOtcBvalDealsUploadResponse" type="RetrieveOtcBvalDealsUploadResponse"/>
+	<xs:element name="getFieldsRequest" type="GetFieldsRequest"/>
+	<xs:element name="getFieldsResponse" type="GetFieldsResponse"/>
+	<xs:element name="submitMmktBvalDealsUploadRequest" type="SubmitMmktBvalDealsUploadRequest"/>
+	<xs:element name="submitMmktBvalDealsUploadResponse" type="SubmitMmktBvalDealsUploadResponse"/>
+	<xs:element name="retrieveMmktBvalDealsUploadRequest" type="RetrieveMmktBvalDealsUploadRequest"/>
+	<xs:element name="retrieveMmktBvalDealsUploadResponse" type="RetrieveMmktBvalDealsUploadResponse"/>
+</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="PerSecurityWS_submitGetDataRequest">
+		<wsdl:part element="tns:submitGetDataRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetDataResponse">
+		<wsdl:part element="tns:submitGetDataResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetDataRequest">
+		<wsdl:part element="tns:retrieveGetDataRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetDataResponse">
+		<wsdl:part element="tns:retrieveGetDataResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetHistoryRequest">
+		<wsdl:part element="tns:submitGetHistoryRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetHistoryResponse">
+		<wsdl:part element="tns:submitGetHistoryResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetHistoryRequest">
+		<wsdl:part element="tns:retrieveGetHistoryRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetHistoryResponse">
+		<wsdl:part element="tns:retrieveGetHistoryResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitScheduledRequest">
+		<wsdl:part element="tns:submitScheduledRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitScheduledResponse">
+		<wsdl:part element="tns:submitScheduledResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveScheduledRequest">
+		<wsdl:part element="tns:retrieveScheduledRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveScheduledResponse">
+		<wsdl:part element="tns:retrieveScheduledResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitCancelRequest">
+		<wsdl:part element="tns:submitCancelRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitCancelResponse">
+		<wsdl:part element="tns:submitCancelResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveCancelRequest">
+		<wsdl:part element="tns:retrieveCancelRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveCancelResponse">
+		<wsdl:part element="tns:retrieveCancelResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getCorrectionsRequest">
+		<wsdl:part element="tns:getCorrectionsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getCorrectionsResponse">
+		<wsdl:part element="tns:getCorrectionsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetFundamentalsRequest">
+		<wsdl:part element="tns:submitGetFundamentalsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetFundamentalsResponse">
+		<wsdl:part element="tns:submitGetFundamentalsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetFundamentalsRequest">
+		<wsdl:part element="tns:retrieveGetFundamentalsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetFundamentalsResponse">
+		<wsdl:part element="tns:retrieveGetFundamentalsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetCompanyRequest">
+		<wsdl:part element="tns:submitGetCompanyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetCompanyResponse">
+		<wsdl:part element="tns:submitGetCompanyResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetCompanyRequest">
+		<wsdl:part element="tns:retrieveGetCompanyRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetCompanyResponse">
+		<wsdl:part element="tns:retrieveGetCompanyResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetActionsRequest">
+		<wsdl:part element="tns:submitGetActionsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetActionsResponse">
+		<wsdl:part element="tns:submitGetActionsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetActionsRequest">
+		<wsdl:part element="tns:retrieveGetActionsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetActionsResponse">
+		<wsdl:part element="tns:retrieveGetActionsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getPortfolioValidationRequest">
+		<wsdl:part element="tns:getPortfolioValidationRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getPortfolioValidationResponse">
+		<wsdl:part element="tns:getPortfolioValidationResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetQuotesRequest">
+		<wsdl:part element="tns:submitGetQuotesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetQuotesResponse">
+		<wsdl:part element="tns:submitGetQuotesResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetQuotesRequest">
+		<wsdl:part element="tns:retrieveGetQuotesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetQuotesResponse">
+		<wsdl:part element="tns:retrieveGetQuotesResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetAllQuotesRequest">
+		<wsdl:part element="tns:submitGetAllQuotesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitGetAllQuotesResponse">
+		<wsdl:part element="tns:submitGetAllQuotesResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetAllQuotesRequest">
+		<wsdl:part element="tns:retrieveGetAllQuotesRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveGetAllQuotesResponse">
+		<wsdl:part element="tns:retrieveGetAllQuotesResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitOtcbvalUploadRequest">
+		<wsdl:part element="tns:submitOtcbvalUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitOtcbvalUploadResponse">
+		<wsdl:part element="tns:submitOtcbvalUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveOtcbvalUploadRequest">
+		<wsdl:part element="tns:retrieveOtcbvalUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveOtcbvalUploadResponse">
+		<wsdl:part element="tns:retrieveOtcbvalUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitOtcBvalDealsUploadRequest">
+		<wsdl:part element="tns:submitOtcBvalDealsUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitOtcBvalDealsUploadResponse">
+		<wsdl:part element="tns:submitOtcBvalDealsUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveOtcBvalDealsUploadRequest">
+		<wsdl:part element="tns:retrieveOtcBvalDealsUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveOtcBvalDealsUploadResponse">
+		<wsdl:part element="tns:retrieveOtcBvalDealsUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getFieldsRequest">
+		<wsdl:part element="tns:getFieldsRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_getFieldsResponse">
+		<wsdl:part element="tns:getFieldsResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitMmktBvalDealsUploadRequest">
+		<wsdl:part element="tns:submitMmktBvalDealsUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_submitMmktBvalDealsUploadResponse">
+		<wsdl:part element="tns:submitMmktBvalDealsUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveMmktBvalDealsUploadRequest">
+		<wsdl:part element="tns:retrieveMmktBvalDealsUploadRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="PerSecurityWS_retrieveMmktBvalDealsUploadResponse">
+		<wsdl:part element="tns:retrieveMmktBvalDealsUploadResponse" name="result"/>
+	</wsdl:message>
+	<wsdl:portType name="PerSecurityWS">
+		<wsdl:operation name="submitGetDataRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetDataRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetDataResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetDataResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetDataRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetDataResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetHistoryRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetHistoryRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetHistoryResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetHistoryRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetHistoryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitScheduledRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitScheduledRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitScheduledResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveScheduledResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveScheduledRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveScheduledResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitCancelRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitCancelRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitCancelResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveCancelResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveCancelRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveCancelResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCorrections">
+			<wsdl:input message="tns:PerSecurityWS_getCorrectionsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_getCorrectionsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetFundamentalsRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetFundamentalsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetFundamentalsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetFundamentalsResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetFundamentalsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetFundamentalsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetCompanyRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetCompanyRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetCompanyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetCompanyResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetCompanyRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetCompanyResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetActionsRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetActionsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetActionsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetActionsResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetActionsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetActionsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPortfolioValidation">
+			<wsdl:input message="tns:PerSecurityWS_getPortfolioValidationRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_getPortfolioValidationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetQuotesRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetQuotesRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetQuotesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetQuotesResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetQuotesRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetQuotesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetAllQuotesRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitGetAllQuotesRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitGetAllQuotesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetAllQuotesResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveGetAllQuotesRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveGetAllQuotesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitOtcbvalUploadRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitOtcbvalUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitOtcbvalUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveOtcbvalUploadResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveOtcbvalUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveOtcbvalUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitOtcBvalDealsUploadRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitOtcBvalDealsUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitOtcBvalDealsUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveOtcBvalDealsUploadResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveOtcBvalDealsUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveOtcBvalDealsUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFields">
+			<wsdl:input message="tns:PerSecurityWS_getFieldsRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_getFieldsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="submitMmktBvalDealsUploadRequest">
+			<wsdl:input message="tns:PerSecurityWS_submitMmktBvalDealsUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_submitMmktBvalDealsUploadResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveMmktBvalDealsUploadResponse">
+			<wsdl:input message="tns:PerSecurityWS_retrieveMmktBvalDealsUploadRequest"/>
+			<wsdl:output message="tns:PerSecurityWS_retrieveMmktBvalDealsUploadResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PerSecurityWSBinding" type="tns:PerSecurityWS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="submitGetDataRequest">
+			<soap:operation soapAction="submitGetDataRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetDataResponse">
+			<soap:operation soapAction="retrieveGetDataResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetHistoryRequest">
+			<soap:operation soapAction="submitGetHistoryRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetHistoryResponse">
+			<soap:operation soapAction="retrieveGetHistoryResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitScheduledRequest">
+			<soap:operation soapAction="submitScheduledRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveScheduledResponse">
+			<soap:operation soapAction="retrieveScheduledResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitCancelRequest">
+			<soap:operation soapAction="submitCancelRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveCancelResponse">
+			<soap:operation soapAction="retrieveCancelResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getCorrections">
+			<soap:operation soapAction="getCorrections"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetFundamentalsRequest">
+			<soap:operation soapAction="submitGetFundamentalsRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetFundamentalsResponse">
+			<soap:operation soapAction="retrieveGetFundamentalsResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetCompanyRequest">
+			<soap:operation soapAction="submitGetCompanyRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetCompanyResponse">
+			<soap:operation soapAction="retrieveGetCompanyResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetActionsRequest">
+			<soap:operation soapAction="submitGetActionsRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetActionsResponse">
+			<soap:operation soapAction="retrieveGetActionsResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPortfolioValidation">
+			<soap:operation soapAction="getPortfolioValidation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetQuotesRequest">
+			<soap:operation soapAction="submitGetQuotesRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetQuotesResponse">
+			<soap:operation soapAction="retrieveGetQuotesResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitGetAllQuotesRequest">
+			<soap:operation soapAction="submitGetAllQuotesRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveGetAllQuotesResponse">
+			<soap:operation soapAction="retrieveGetAllQuotesResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitOtcbvalUploadRequest">
+			<soap:operation soapAction="submitOtcbvalUploadRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveOtcbvalUploadResponse">
+			<soap:operation soapAction="retrieveOtcbvalUploadResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitOtcBvalDealsUploadRequest">
+			<soap:operation soapAction="submitOtcBvalDealsUploadRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveOtcBvalDealsUploadResponse">
+			<soap:operation soapAction="retrieveOtcBvalDealsUploadResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getFields">
+			<soap:operation soapAction="getFields"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="submitMmktBvalDealsUploadRequest">
+			<soap:operation soapAction="submitMmktBvalDealsUploadRequest"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveMmktBvalDealsUploadResponse">
+			<soap:operation soapAction="retrieveMmktBvalDealsUploadResponse"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PerSecurityWS">
+		<wsdl:port binding="tns:PerSecurityWSBinding" name="PerSecurityWSPort">
+			<soap:address location="https://dlws.bloomberg.com/dlps"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
